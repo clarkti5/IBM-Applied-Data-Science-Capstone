@@ -217,7 +217,7 @@ Clicking on the marker, we can see the successful launches colored in green.
 From the Folium map, we can infer the following approximate launch success rates for each site.
 
 | Launch site  | Success rate on Folium Map|
-| -----------  | ------------------------- |
+| -----------  | :-------------------------: |
 | CCAFS LC-40  | 27%                       |
 | CCAFS SLC-40 | 43%                       |
 | KSC LC-39A   | 77%                       |
