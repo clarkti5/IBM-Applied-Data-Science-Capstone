@@ -1,18 +1,34 @@
 # IBM Applied Data Science Capstone
+This is the final project from the IBM Applied Data Science Capstone course on Coursera. This document contains a summary of the methodology and results. The `final_presentation.pdf` is a slide deck version of the contents here.
+
 #### Table of contents
+1. [Executive summary](#executive-summary)
+2. [Introduction](#introduction)
+3. [Methodology](#methodology)
+   1. [Data collection](#data-collection)
+   2. [Data processing](#data-processing)
+   3. [Exploratory analysis](#exploratory-analysis)
+   4. [Features engineering](#features-engineering)
+   5. [Visual analytics](#visual-analytics)
+   6. [Predictive analytics](#predictive-analytics)
+4. [Results and insights](#results-and-insights)
+   1. [Exploratory data analysis](#exploratory-data-analysis)
+   2. [Visual analytics](#svisual-analytics)
+   3. [Predictive analytics](#spredictive-analytics)
+5. [Conclusions](#conclusions)
 
-## Executive Summary
-We collected historical Falcon 9 launch data from the SpaceX launch API along with information available on Wikipedia. After data processing and exploratory data analysis with some basic visualizations and SQL queries, we performed features engineering on the data. We then utilized interactive analytics to investigate how the launch success rate is related to the data feautures, including flight number, launch site location, orbit type, and payload mass. Finally, we trained and tuned 5 machine learning models to predict whether the first stage of a Falcon 9 rocket will land successfully and be able to be reused. Each of the 5 models obtained similar performance, with an 83% prediction accuracy on the test data.
+## Executive summary <a name='executive-summary'></a>
+We collected historical Falcon 9 launch data from the SpaceX launch API along with information available on Wikipedia. After data processing and exploratory data analysis with some basic visualizations and SQL queries, we performed features engineering on the data. We then utilized interactive analytics to investigate how the launch success rate is related to the data features, including flight number, launch site location, orbit type, and payload mass. Finally, we trained and tuned 5 machine learning models to predict whether the first stage of a Falcon 9 rocket will land successfully and be able to be reused. Each of the 5 models obtained similar performance, with an 83% prediction accuracy on the test data.
 
-## Introduction
+## Introduction <a name='introduction'></a>
 Much of the cost savings of the SpaceX Falcon 9 rocket come from the fact that the first stage can be reused if landed successfully. By predicting whether or not the first stage can be successfully recovered, we can estimate the cost of a launch (which could be useful to another company hoping to bid against SpaceX). We hope to answer the following question.
 
 > Can we predict whether or not the first stage of a Falcon 9 rocket will land successfully?
 
-## Methodology
+## Methodology <a name='methodology'></a>
 In this section, we summarize our methodology regarding data collection, data processing, exploratory analysis, visual analytics, and predictive analytics.
 
-### Data collection
+### Data collection <a name='data-collection'></a>
 
 #### SpaceX REST API
 We made a request from the SpaceX REST API at `spacex_url = https://api.spacexdata.com/v4/launches/past` to collect historical launch data.
@@ -30,7 +46,7 @@ The response was then converted to a Pandas dataframe using the `.json_normalize
 #### Web scraping from Wikipedia
 Additional data was scraped from Wikipedia tables at `https://en.wikipedia.org/w/index.php?title=List_of_Falcon_9_and_Falcon_Heavy_launches&oldid=1027686922` using `BeautifulSoup` and extracted to a list of HTML tables using `soup.find_all('tables')`.
 
-### Data processing
+### Data processing <a name='data-processing'></a>
 
 #### Wrangling the REST API data
 Much of the data collected from the SpaceX REST API referenced identification numbers. Several functions were used to get more easily interpretable information from the REST API. For example, `getBoosterVersion()` makes a separate request from the REST API to extract the booster version from the identification number in the original response data.
@@ -54,10 +70,10 @@ From the list of HTML tables scraped from `BeautifulSoup`, the relevant data was
 
 ![data_scraped](https://user-images.githubusercontent.com/50031286/226359249-e607438c-009a-4422-a0bd-1a954457b8ec.png)
 
-### Exploratory analysis
+### Exploratory analysis <a name='exploratory-analysis'></a>
 Exploratory analysis was performed on the processed data using `SQL` and some simple visualizations in `Seaborn`.
 
-### Features Engineering
+### Features Engineering <a name='features-engineering'></a>
 From the REST API data, there was a column labeled `Outcome` which tracked the landing outcome for the first stage of a Falcon 9 launch. This column had 8 possibilities, shown below.
 
 ![landing_outcomes](https://user-images.githubusercontent.com/50031286/226359907-2c3c6a0f-7367-47ae-9556-50bfc1b46110.png)
@@ -68,10 +84,10 @@ Since we are only concerned with whether the landing was a success or not, we in
 
 After this, we one-hot encoded the remaining categorical variables using `get_dummites`. The resulting dataframe was cast as type `float64`.
 
-### Visual analytics
+### Visual analytics <a name='visual-analytics'></a>
 We explored the launch site locations using `Folium` and created an interactive dashboard using `Plotly Dash` to investigate the launch success rates as related to launch site and payload mass.
 
-### Predictive analytics
+### Predictive analytics <a name='predictive-analytics'></a>
 We trained 5 classification machine learning models in an attempt to predict the launch outcome (i.e. the `Class` column). After normalizing with `StandardScaler` and splitting the data into training and testing sets with `train_test_split`, we trained the following models from `scikit-learn`.
 - Logistic Regression
 - Support Vector Machine
@@ -79,12 +95,19 @@ We trained 5 classification machine learning models in an attempt to predict the
 - *k*-Nearest Neighbors
 - XGBClassifier
 
+Note that the testing data has only 18 entries--this ultimately results in models that are difficult to distinguish from one another.
+
+![train_test_split](https://user-images.githubusercontent.com/50031286/226391846-0a753a37-be5e-4f8e-8600-3492cd7ed86f.png)
+![y_test](https://user-images.githubusercontent.com/50031286/226391889-f66a173c-c0f5-4dc0-ad4d-a9aa736ac928.png)
+
 Hyperparameters were tuned using 10-fold cross validation with `GridSearchCV`. Model performance was evaluated using their accuracy score on the test data. 
+
+![model_training_tuning](https://user-images.githubusercontent.com/50031286/226390787-934a2ec1-2694-4639-81d0-12cb7e14387a.png)
 
 ## Results and insights
 
-### Exploratory data analysis
-This sections summarizes the results and insights drawn from our exploratory data analysis. For more detail, see the following notebooks from the `Exploratory analytics` folder.
+### Exploratory data analysis <a name='exploratory-data-analysis'></a>
+This section summarizes the results and insights drawn from our exploratory data analysis. For more detail, see the following notebooks from the `Exploratory analytics` folder.
 - `EDA with SQL.ipynb`
 - `Visualization and features engineering.ipynb`
 
@@ -168,7 +191,7 @@ Heavy payloads (greater than 10,000 kg) have more success with LEO and ISS launc
 
 The launch success rate has increased from 2010 to 2020.
 
-### Visual analytics
+### Visual analytics <a name='svisual-analytics'></a>
 This section contains results and insights from our visual analytics. For more detail, see the following notebooks from the `Visual analytics` folder.
 - `Exploring launch site locations with Folium.ipynb` 
 - `Launch records dashboard.ipynb`
@@ -185,7 +208,7 @@ There are 4 distinct launch sites, 1 of which is in California with the rest in 
 
 ![launch_success_1](https://user-images.githubusercontent.com/50031286/226376785-a7ed2118-2d22-4f42-83af-692086d8ee7c.png)
 
-The launch site in California (`VAFB SLC-4E`) has 10 launches, while the Florid launche sites have a combined 46 launches.
+The launch site in California (`VAFB SLC-4E`) has 10 launches, while the Florida launch sites have a combined 46 launches.
 
 ![launch_success_1](https://user-images.githubusercontent.com/50031286/226377202-74787518-a901-4732-84e8-518768f9fafc.png)
 
@@ -242,20 +265,23 @@ Meanwhile, the payload range from 6,000 kg to 7,500 kg has a success rate of 0%.
 
 ![payload_success_large](https://user-images.githubusercontent.com/50031286/226388032-150ef48a-6330-4990-94d4-9d9fe446a8fd.png)
 
-### Predictive analytics
-This sections summarizes the results and insights drawn from our predictive analytics. For more detail, see the following notebook from the `Predictive analytics` folder.
+### Predictive analytics <a name='spredictive-analytics'></a>
+This section summarizes the results and insights drawn from our predictive analytics. For more detail, see the following notebook from the `Predictive analytics` folder.
 - `Predictive analytics (classification).ipynb`
 
 #### Model performance
 
+![model_performance](https://user-images.githubusercontent.com/50031286/226389871-ee215cf5-68f2-482a-8d67-aaee66841bf0.png)
+
+Each of the 5 trained models performed similarly, achieving an accuracy of about 83% on the testing data.
 
 #### Confusion matrix
 
-## Conclusions
-* It appears possible to predict whether or not a Falcon 9 rocket's first stage can be reused.
-* However: the models should be trained on a larger dataset if we would actually like to determine optimal performance.
+![confusion_matrix](https://user-images.githubusercontent.com/50031286/226390010-d4bf8091-448c-4e3a-894d-6ed4ecde6741.png)
 
-## Appendix
+Moreover, each model produced the same confusion matrix. The confusion matrix indicates that any of the models can be used to predict the landing outcome, with a primary caveat of false positives.
 
-* IBM Coursera Acknowledgement
-* Jupyter notebooks (GitHub) link
+## Conclusions <a name='conclusions'></a>
+
+- It appears possible to predict whether or not a Falcon 9 rocket's first stage can be reused.
+- However, the models should be trained and tested on a larger dataset if we would actually like to determine optimal performance.
