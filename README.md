@@ -206,8 +206,6 @@ There are 4 distinct launch sites, 1 of which is in California with the rest in 
 
 - Successful launches by site
 
-![launch_success_1](https://user-images.githubusercontent.com/50031286/226376785-a7ed2118-2d22-4f42-83af-692086d8ee7c.png)
-
 The launch site in California (`VAFB SLC-4E`) has 10 launches, while the Florida launch sites have a combined 46 launches.
 
 ![launch_success_1](https://user-images.githubusercontent.com/50031286/226377202-74787518-a901-4732-84e8-518768f9fafc.png)
