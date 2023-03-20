@@ -82,9 +82,11 @@ We trained 5 classification machine learning models in an attempt to predict the
 Hyperparameters were tuned using 10-fold cross validation with `GridSearchCV`. Model performance was evaluated using their accuracy score on the test data. 
 
 ## Results and insights
-This sections summarizes the results and insights drawn from our investigations.
 
 ### Exploratory data analysis
+This sections summarizes the results and insights drawn from our exploratory data analysis. For more detail, see the following notebooks from the `Exploratory analytics` folder.
+- `EDA with SQL.ipynb`
+- `Visualization and features engineering.ipynb`
 
 #### EDA with SQL
 
@@ -130,17 +132,122 @@ This sections summarizes the results and insights drawn from our investigations.
 
 #### EDA with visualization
 
+- Flight Number vs. Launch Site
 
+![flightno_vs_launchsite](https://user-images.githubusercontent.com/50031286/226370235-4af0c7b3-5c70-4c61-b24b-7615131c29ab.png)
+
+Notice, the success rate appears to increase with the flight number and different launch sites have different success rates. Also observe how the choice of launch site changes with flight number.
+
+- Payload mass vs. Launch Site
+
+![payload_vs_launchsite](https://user-images.githubusercontent.com/50031286/226371218-5a3716e2-0c41-4033-99bc-3e754f315c4f.png)
+
+Launch site VAFB SLC-4E has no launches with payload greater than 10,000 kg.
+
+- Orbit success rates
+
+![orbit_success](https://user-images.githubusercontent.com/50031286/226371837-6018f3ea-8815-464b-9f09-6b43379a5e07.png)
+
+The orbits with the highest success rate are ES-L1, GEO, HEO, and SSO.
+
+- Flight number vs. Orbit
+
+![flightno_vs_orbit](https://user-images.githubusercontent.com/50031286/226372072-deac00a3-683f-4717-92ab-d0baef1712d8.png)
+
+The success rate for LEO increases with flight number. However, there does not appear to be a relationship between flight number and success rate for GTO launches.
+
+- Payload mass vs. Orbit
+
+![payload_vs_orbit](https://user-images.githubusercontent.com/50031286/226372490-8fd9fc52-dc9f-428f-a411-f6e6d3404ad8.png)
+
+Heavy payloads (greater than 10,000 kg) have more success with LEO and ISS launches.
+
+- Launch success rate yearly trend
+
+![year_vs_success](https://user-images.githubusercontent.com/50031286/226373346-730c2643-0866-4b48-9795-516a9762579b.png)
+
+The launch success rate has increased from 2010 to 2020.
 
 ### Visual analytics
+This section contains results and insights from our visual analytics. For more detail, see the following notebooks from the `Visual analytics` folder.
+- `Exploring launch site locations with Folium.ipynb` 
+- `Launch records dashboard.ipynb`
 
-#### Launch site proximities
+#### Launch site geography
 
+- Launch site locations
+
+![launch_site_locations](https://user-images.githubusercontent.com/50031286/226375730-e1036ca9-61d6-4038-a9a6-d94a04282108.png)
+
+There are 4 distinct launch sites, 1 of which is in California with the rest in close proximity to one another near Cape Canaveral, Florida.
+
+- Successful launches by site
+
+![launch_success_1](https://user-images.githubusercontent.com/50031286/226376785-a7ed2118-2d22-4f42-83af-692086d8ee7c.png)
+
+The launch site in California (`VAFB SLC-4E`) has 10 launches, while the Florid launche sites have a combined 46 launches.
+
+![launch_success_1](https://user-images.githubusercontent.com/50031286/226377202-74787518-a901-4732-84e8-518768f9fafc.png)
+
+Clicking on the marker, we can see the successful launches colored in green.
+
+![launch_success_2](https://user-images.githubusercontent.com/50031286/226378085-130ae1c5-e7fa-4860-8527-74e0f1709949.png)
+
+From the Folium map, we can infer the following approximate launch success rates for each site.
+
+| Launch site  | Success rate on Folium Map|
+| -----------  | ------------------------- |
+| CCAFS LC-40  | 27%                       |
+| CCAFS SLC-40 | 43%                       |
+| KSC LC-39A   | 77%                       |
+| VAFB SLC-4E  | 40%                       |
+
+- Launch site proximities
+
+![launch_site_proximities](https://user-images.githubusercontent.com/50031286/226382619-e42e14a4-e4ce-4b82-add3-233024ff9ef2.png)
+
+We observed that launch sites tend to be close to railways, highways, and coastlines. Close proximity to railways and highways makes it easier to transport resources (including people) to and from the launch site. 
+
+We also noticed that launch sites tend to be close to coastlines but at least 15 km away from cities. These locational constraints can help minimize the risk of collateral damage in the event of a malfunction.
+  
 #### Launch site and payload dashboard
 
+- Total successful launches by site
+
+![launch_success_site_pie](https://user-images.githubusercontent.com/50031286/226384798-ba7ce219-2fc2-4369-8339-37c8f8380cbe.png)
+
+KSC LC-39A has the highest proportion of successful launches.
+
+- Successful launches from KSC LC-39A
+
+![successful_launches_ksc](https://user-images.githubusercontent.com/50031286/226385413-368d7225-1fdb-4014-94a0-ddd5fd77143f.png)
+
+KSC LC-39A also has the highest launch success rate of approximately 77%.
+
+- Payload vs. Success
+
+![payload_success_all](https://user-images.githubusercontent.com/50031286/226387168-2e94cbb9-a36d-4216-be38-190a51d1f05f.png)
+
+Generally, as payload increases, the success rate for all sites decreases. Below are some plots showing the success rate for small and heavy payload ranges.
+
+![payload_success_smallest](https://user-images.githubusercontent.com/50031286/226387306-ba6ea4dc-bf37-4554-8ffc-3db488d8d8ac.png)
+
+![payload_success_largest](https://user-images.githubusercontent.com/50031286/226387336-59c0aedd-4750-4610-9c56-4c9dc255ba5b.png)
+
+A payload range between 2,500 kg and 3,500 kg has a success rate of about 67%.
+
+![payload_success_small](https://user-images.githubusercontent.com/50031286/226387617-2962aa72-4f3c-4524-8598-50d0b36dff29.png)
+
+Meanwhile, the payload range from 6,000 kg to 7,500 kg has a success rate of 0%.
+
+![payload_success_large](https://user-images.githubusercontent.com/50031286/226388032-150ef48a-6330-4990-94d4-9d9fe446a8fd.png)
+
 ### Predictive analytics
+This sections summarizes the results and insights drawn from our predictive analytics. For more detail, see the following notebook from the `Predictive analytics` folder.
+- `Predictive analytics (classification).ipynb`
 
 #### Model performance
+
 
 #### Confusion matrix
 
