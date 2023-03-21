@@ -75,6 +75,10 @@ From the list of HTML tables scraped from `BeautifulSoup`, the relevant data was
 ### Exploratory analysis <a name='exploratory-analysis'></a>
 Exploratory analysis was performed on the processed data using `SQL` and some simple visualizations in `Seaborn`.
 
+Using `SQL`, we explored information regarding the launch site names, payload masses, mission outcomes, and dates of successful/failure launches.
+
+Using `Seaborn`, we explored a variety of visualizations related to the launch site, flight number, payload mass, orbit type, and success rate.
+
 ### Features Engineering <a name='features-engineering'></a>
 From the REST API data, there was a column labeled `Outcome` which tracked the landing outcome for the first stage of a Falcon 9 launch. This column had 8 possibilities, shown below.
 
@@ -87,7 +91,9 @@ Since we are only concerned with whether the landing was a success or not, we in
 After this, we one-hot encoded the remaining categorical variables using `get_dummies`. The resulting dataframe was cast as type `float64`.
 
 ### Visual analytics <a name='visual-analytics'></a>
-We explored the launch site locations using `Folium` and created an interactive dashboard using `Plotly Dash` to investigate the launch success rates as related to launch site and payload mass.
+We explored the launch site locations and landmark proximities (e.g. coasts, cities, roads, and railroads) using `Folium` to try to understand how launch sites are chosen and if there is any relationship between launch site and launch success rate. Markers were added for launch site locations along with indicators for total number of launches and launch outcome (i.e. success or failure).
+
+We also created an interactive dashboard using `Plotly Dash` to investigate the launch success rates as related to launch site and payload mass.
 
 ### Predictive analytics <a name='predictive-analytics'></a>
 We trained 5 classification machine learning models in an attempt to predict the launch outcome (i.e. the `Class` column). After normalizing with `StandardScaler` and splitting the data into training and testing sets with `train_test_split`, we trained the following models from `scikit-learn`.
