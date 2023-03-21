@@ -82,7 +82,7 @@ Since we are only concerned with whether the landing was a success or not, we in
 
 ![data_with_class](https://user-images.githubusercontent.com/50031286/226360275-065fb381-330e-451c-af3b-95ffa87d7051.png)
 
-After this, we one-hot encoded the remaining categorical variables using `get_dummites`. The resulting dataframe was cast as type `float64`.
+After this, we one-hot encoded the remaining categorical variables using `get_dummies`. The resulting dataframe was cast as type `float64`.
 
 ### Visual analytics <a name='visual-analytics'></a>
 We explored the launch site locations using `Folium` and created an interactive dashboard using `Plotly Dash` to investigate the launch success rates as related to launch site and payload mass.
