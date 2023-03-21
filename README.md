@@ -46,6 +46,8 @@ The response was then converted to a Pandas dataframe using the `.json_normalize
 #### Web scraping from Wikipedia
 Additional data was scraped from Wikipedia tables at `https://en.wikipedia.org/w/index.php?title=List_of_Falcon_9_and_Falcon_Heavy_launches&oldid=1027686922` using `BeautifulSoup` and extracted to a list of HTML tables using `soup.find_all('tables')`.
 
+![scrape_diagram](https://user-images.githubusercontent.com/50031286/226625414-d767276b-71f9-4232-af49-308f1835d91b.png)
+
 ### Data processing <a name='data-processing'></a>
 
 #### Wrangling the REST API data
